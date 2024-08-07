@@ -11,7 +11,6 @@ class ConferenceController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(): Response
     {
-        dump($_ENV['DATABASE_URL']);
         return new Response(<<<EOF
 <html>
     <body>
