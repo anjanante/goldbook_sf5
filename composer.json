@@ -21,8 +21,15 @@
         "symfony/framework-bundle": "5.4.*",
         "symfony/maker-bundle": "1.50",
         "symfony/runtime": "5.4.*",
+        "symfony/twig-bundle": "5.4.*",
         "symfony/var-dumper": "5.4.*",
-        "symfony/yaml": "5.4.*"
+        "symfony/yaml": "5.4.*",
+        "twig/cssinliner-extra": "^3.11",
+        "twig/extra-bundle": "^3.11",
+        "twig/inky-extra": "^3.11",
+        "twig/intl-extra": "^3.11",
+        "twig/string-extra": "^3.11",
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "symfony/stopwatch": "5.4.*",
