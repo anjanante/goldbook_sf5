@@ -28,6 +28,7 @@ EOF
     #[Route('/', name: 'homepage')]
     public function index(ConferenceRepository $conferenceRepository): Response
     {
+        dump('BRANCH CHECK');
         return $this->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll()
         ]);
