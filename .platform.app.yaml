@@ -4,8 +4,11 @@ type: php:8.1
 
 runtime:
     extensions:
-        - pdo_pgsql
+        - blackfire
         - xsl
+        - amqp
+        - redis
+        - pdo_pgsql
         - apcu
         - mbstring
         - sodium
