@@ -38,16 +38,25 @@ EOF
     }
 
     #[Route('/conference/{slug}', name: 'conference')]
-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
+    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, string $photoDir): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setConference($conference);
+            if($photo = $form['photo']->getData()){
+                $filename = bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                try {
+                    $photo->move($photoDir, $filename);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                $comment->setPhotoFilename($filename);
+            }
             $this->em->persist($comment);
             $this->em->flush();
-            $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
+            return $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
         }
 
         $offset = max(0, $request->query->getInt('offset', 0));
