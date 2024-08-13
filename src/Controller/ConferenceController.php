@@ -7,6 +7,7 @@ use App\Entity\Conference;
 use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
 use App\Repository\ConferenceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConferenceController extends AbstractController
 {
+    public function __construct(private EntityManagerInterface $em)
+    {}
+
     #[Route('/c-soon', name: 'c_soon')]
     public function cSoon(): Response
     {
@@ -36,10 +40,18 @@ EOF
     #[Route('/conference/{slug}', name: 'conference')]
     public function show(Request $request, Conference $conference, CommentRepository $commentRepository): Response
     {
-        $offset = max(0, $request->query->getInt('offset', 0));
-        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setConference($conference);
+            $this->em->persist($comment);
+            $this->em->flush();
+            $this->redirectToRoute('conference', ['slug' => $conference->getSlug()]);
+        }
+
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
         return $this->render('conference/show.html.twig', [
             'conference'=> $conference,
             'comments'  => $paginator,
