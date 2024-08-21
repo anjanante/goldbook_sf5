@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   database:
     image: postgres:13-alpine
@@ -22,6 +21,20 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: symfony_mysql
+  #   environment:
+  #     MYSQL_DATABASE: guestbook
+  #     MYSQL_USER: nantedevy
+  #     MYSQL_PASSWORD: mypassword
+  #     MYSQL_ROOT_PASSWORD: root_password
+  #   ports:
+  #     - "3308:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+
 volumes:
   database_data:
   pgadmin-data:
+  # mysql_data:
