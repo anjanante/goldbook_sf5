@@ -6,7 +6,6 @@ use App\Entity\Comment;
 use App\Entity\Conference;
 use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
-use App\Repository\ConferenceRepository;
 use App\SpamChecker;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +34,7 @@ EOF
     }
 
     #[Route('/', name: 'homepage')]
-    public function index(ConferenceRepository $conferenceRepository): Response
+    public function index(): Response
     {
         return $this->render('conference/index.html.twig', []);
     }
