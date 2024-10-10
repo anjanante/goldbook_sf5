@@ -1,0 +1,3 @@
+<?php // test.encrypt.public on Thu, 10 Oct 2024 10:21:31 +0200
+
+return "s\x04\x85lx\xA39L~\xD3AY0\xA2\x7F\x5EG\x3B\x15\x3FY\xF1K\xBE\x24\xB0P\xD5\x5CS\x3AB";
