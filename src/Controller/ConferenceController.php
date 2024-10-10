@@ -40,8 +40,11 @@ EOF
     }
 
     #[Route('/conference/{slug}', name: 'conference')]
-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, SpamChecker $spamChecker, string $photoDir): Response
+    public function show(Request $request, Conference $conference = null, CommentRepository $commentRepository, SpamChecker $spamChecker, string $photoDir): Response
     {
+        if(is_null($conference)){
+            return $this->redirectToRoute('homepage');
+        }
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
