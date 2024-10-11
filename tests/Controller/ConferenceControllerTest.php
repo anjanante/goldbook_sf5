@@ -2,13 +2,13 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Panther\PantherTestCase;
 
-class ConferenceControllerTest extends WebTestCase
+class ConferenceControllerTest extends PanthertestCase
 {
     public function testIndex(): void
     {
-        $client = static::createClient();
+        $client = static::createPantherClient(['external_base_uri' => $_SERVER['SYMFONY_PROJECT_DEFAULT_ROUTE_URL']]);
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
@@ -17,7 +17,8 @@ class ConferenceControllerTest extends WebTestCase
 
     public function testCommentSubmission()
     {
-        $client = static::createClient();
+        // $client = static::createClient();
+        $client = static::createPantherClient(['external_base_uri' => $_SERVER['SYMFONY_PROJECT_DEFAULT_ROUTE_URL']]);
         $client->request('GET', '/conference/amsterdam-2019');
         $client->submitForm('Submit', [
             'comment_form[author]' => 'Fabien',
@@ -32,7 +33,8 @@ class ConferenceControllerTest extends WebTestCase
 
     public function testConferencePage()
     {
-        $client = static::createClient();
+        // $client = static::createClient();
+        $client = static::createPantherClient(['external_base_uri' => $_SERVER['SYMFONY_PROJECT_DEFAULT_ROUTE_URL']]);
         $crawler = $client->request('GET', '/');
 
         $this->assertCount(2, $crawler->filter('h4'));
